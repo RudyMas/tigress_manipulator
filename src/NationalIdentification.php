@@ -13,11 +13,14 @@ namespace Tigress;
  */
 class NationalIdentification
 {
-    public static function version(): array
+    /**
+     * Get the version of the class.
+     *
+     * @return string
+     */
+    public static function version(): string
     {
-        return [
-            'NationalIdentification' => '2025.01.23',
-        ];
+        return '2025.01.23';
     }
 
     /**
