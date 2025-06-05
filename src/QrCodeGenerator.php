@@ -2,7 +2,10 @@
 
 namespace Tigress;
 
+use chillerlan\QRCode\Common\EccLevel;
+use chillerlan\QRCode\Output\QROutputInterface;
 use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
 
 /**
  * Class QrCodeGenerator (PHP version 8.4)
@@ -30,9 +33,19 @@ class QrCodeGenerator
         return '2025.06.05';
     }
 
-    public function __construct()
+    public function __construct(array $setOptions = [])
     {
-        $this->qr = new QRCode();
+        $myOptions = [
+            'version' => 7,
+            'outputType' => QROutputInterface::GDIMAGE_PNG,
+            'eccLevel' => EccLevel::L,
+            'scale' => 10,
+        ];
+
+        $myOptions = array_merge($myOptions, $setOptions);
+
+        $options = new QROptions($myOptions);
+        $this->qr = new QRCode($options);
     }
 
     /**
@@ -40,7 +53,7 @@ class QrCodeGenerator
      * @param string $filename
      * @return mixed
      */
-    public function simpleQrCode(string $data, string $filename): mixed
+    public function render(string $data, string $filename): mixed
     {
         return $this->qr->render($data, $filename);
     }
