@@ -41,7 +41,7 @@ class QrCodeGenerator
         $myOptions = [
             'version' => Version::AUTO,
             'versionMin' => 7,
-            'eccLevel' => EccLevel::H,
+            'eccLevel' => EccLevel::L,
             'outputType' => QROutputInterface::GDIMAGE_PNG,
             'scale' => 10,
             'invertMatrix' => false,
