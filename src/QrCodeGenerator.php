@@ -14,7 +14,7 @@ use chillerlan\QRCode\QROptions;
  * @author Rudy Mas <rudy.mas@rudymas.be>
  * @copyright 2025, rudymas.be. (http://www.rudymas.be/)
  * @license https://opensource.org/licenses/GPL-3.0 GNU General Public License, version 3 (GPL-3.0)
- * @version 2025.06.05.1
+ * @version 2025.06.06.0
  * @package Tigress\QrCodeGenerator
  */
 class QrCodeGenerator
@@ -33,7 +33,7 @@ class QrCodeGenerator
      */
     public static function version(): string
     {
-        return '2025.06.05';
+        return '2025.06.06';
     }
 
     public function __construct(array $setOptions = [])
@@ -78,6 +78,7 @@ class QrCodeGenerator
      */
     public function render(string $data, ?string $filename = null): mixed
     {
+        $this->qr->clearSegments();
         return $this->qr->render($data, $filename);
     }
 
@@ -87,6 +88,7 @@ class QrCodeGenerator
      */
     public function base64(string $data): string
     {
+        $this->qr->clearSegments();
         return 'data:image/png;base64,' . base64_encode($this->qr->render($data));
     }
 
@@ -99,6 +101,7 @@ class QrCodeGenerator
     public function renderWithLogo(string $data, string $logoPath, ?string $saveTo = null): string
     {
         // 1. Render QR to PNG
+        $this->qr->clearSegments();
         $png = $this->qr->render($data);
 
         // 2. Convert to GD image
