@@ -16,6 +16,7 @@
     "php": ">=8.5",
     "ext-gd": "*",
     "ext-mbstring": "*",
+    "ext-fileinfo": "*",
     "chillerlan/php-qrcode": "^5.0"
   },
   "autoload": {
