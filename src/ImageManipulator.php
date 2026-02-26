@@ -5,7 +5,7 @@ namespace Tigress;
 use Exception;
 
 /**
- * Class Text Manipulator (PHP version 8.5)
+ * Class Image Manipulator (PHP version 8.5)
  *
  * @author Rudy Mas <rudy.mas@rudymas.be>
  * @copyright 2026, rudymas.be. (http://www.rudymas.be/)
