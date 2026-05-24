@@ -2,13 +2,15 @@
 
 namespace Tigress;
 
+use Random\RandomException;
+
 /**
- * Class Text Manipulator (PHP version 8.4)
+ * Class Text Manipulator (PHP version 8.5)
  *
  * @author Rudy Mas <rudy.mas@rudymas.be>
- * @copyright 2024, rudymas.be. (http://www.rudymas.be/)
+ * @copyright 2024-2026, rudymas.be. (http://www.rudymas.be/)
  * @license https://opensource.org/licenses/GPL-3.0 GNU General Public License, version 3 (GPL-3.0)
- * @version 2024.11.28.0
+ * @version 2026.05.24.0
  * @package Tigress\TextManipulator
  */
 class TextManipulator
@@ -20,19 +22,20 @@ class TextManipulator
      */
     public static function version(): string
     {
-        return '2024.11.28';
+        return '2026.05.24';
     }
 
     /**
      * @param int $numberOfCharacters The number of characters I want
      * @return string
+     * @throws RandomException
      */
     public function randomText(int $numberOfCharacters): string
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#@$%£';
         $randomString = '';
         for ($x = 0; $x < $numberOfCharacters; $x++) {
-            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+            $randomString .= $characters[random_int(0, strlen($characters) - 1)];
         }
         return $randomString;
     }

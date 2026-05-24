@@ -3,12 +3,12 @@
 namespace Tigress;
 
 /**
- * Class BBCode (PHP version 8.3)
+ * Class BBCode (PHP version 8.5)
  *
  * @author Rudy Mas <rudy.mas@rudymas.be>
- * @copyright 2024, rudymas.be. (http://www.rudymas.be/)
+ * @copyright 2024-2026, rudymas.be. (http://www.rudymas.be/)
  * @license https://opensource.org/licenses/GPL-3.0 GNU General Public License, version 3 (GPL-3.0)
- * @version 2024.11.28.0
+ * @version 2026.05.24.0
  * @package Tigress\BBCode
  */
 class BBCode
@@ -30,7 +30,7 @@ class BBCode
      */
     public static function version(): string
     {
-        return '2024.11.28';
+        return '2026.05.24';
     }
 
     public function __construct()
@@ -65,7 +65,7 @@ class BBCode
             '<del>$1</del>',
             '<blockquote>quote:<hr>$1<hr></blockquote>',
             '<blockquote cite="$1">quote:<hr>$2<hr></blockquote>',
-            '<blockquote">code:<hr><code>$1</code><hr></blockquote>',
+            '<blockquote>code:<hr><code>$1</code><hr></blockquote>',
             '<a href="$1$2" target="_blank">$1$2</a>',
             '<a href="http://$1" target="_blank">$1</a>',
             '<a href="$1$2" target="_blank">$3</a>',
