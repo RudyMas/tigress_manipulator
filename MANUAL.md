@@ -18,9 +18,6 @@
 9. [CalculatePregnancy](#calculatepregnancy)
 10. [NationalIdentification](#nationalidentification)
 11. [QrCodeGenerator](#qrcodegenerator)
-12. [Code Review — Bugs & Issues](#code-review--bugs--issues)
-13. [Code Review — Quality Notes](#code-review--quality-notes)
-14. [Contributing](#contributing)
 
 ---
 
@@ -58,8 +55,8 @@ The `Manipulator` class is a static facade that returns the version of every sub
 $versions = Manipulator::version();
 // Returns:
 // [
-//     'Manipulator' => '2026.02.26',
-//     'BBCode'       => '2024.11.28',
+//     'Manipulator' => '2026.05.24',
+//     'BBCode'       => '2026.05.24',
 //     ...
 // ]
 ```
@@ -68,13 +65,13 @@ $versions = Manipulator::version();
 
 ## TextManipulator
 
-**File:** `src/TextManipulator.php`
+**File:** `src/TextManipulator.php` · v2026.05.24
 
 ### Methods
 
 | Method | Signature | Description |
 |--------|-----------|-------------|
-| `randomText` | `(int $numberOfCharacters): string` | Generate a random alphanumeric + symbol string of the given length. |
+| `randomText` | `(int $numberOfCharacters): string` | Generate a random alphanumeric + symbol string of the given length. Uses `random_int()`. |
 | `cleanHTML` | `(string $input): string` | Encode HTML entities (ENT_HTML5, UTF-8). |
 | `uncleanHTML` | `(string $input): string` | Decode HTML entities back to raw characters. |
 | `cleanURL` | `(string $input): string` | URL-encode a string, replacing `/` with `__` first. |
@@ -94,11 +91,14 @@ echo $tm->cleanURL('hello/world');  // "hello__world" (URL-encoded)
 echo $tm->rtrimStringNumber('5.00'); // "5"
 ```
 
+### Exceptions
+- `Random\RandomException` if the system's CSPRNG fails.
+
 ---
 
 ## DateManipulator
 
-**File:** `src/DateManipulator.php`
+**File:** `src/DateManipulator.php` · v2024.11.28
 
 ### Methods
 
@@ -121,7 +121,7 @@ echo $dm->convertTimestampToDateTime($ts);   // "2026-05-24 00:00:00"
 
 ## ImageManipulator
 
-**File:** `src/ImageManipulator.php`
+**File:** `src/ImageManipulator.php` · v2026.02.26
 
 Requires the **GD** extension.
 
@@ -157,7 +157,7 @@ unlink($path); // cleanup
 
 ## BBCode
 
-**File:** `src/BBCode.php`
+**File:** `src/BBCode.php` · v2026.05.24
 
 Converts BBCode markup to HTML.
 
@@ -198,7 +198,7 @@ echo $bb->processText('[b]bold[/b] and [i]italic[/i]');
 
 ## CalculateBirthday
 
-**File:** `src/CalculateBirthday.php`
+**File:** `src/CalculateBirthday.php` · v2024.12.18
 
 Calculates elapsed time from a given date/time to now.
 
@@ -210,7 +210,7 @@ Calculates elapsed time from a given date/time to now.
 | `getDate` | `(): string` | Get the current birth date. |
 | `setTime` | `(string $time): void` | Set the birth time (`H:i:s`). |
 | `getTime` | `(): string` | Get the current birth time. |
-| `calculate` | `(string $type): float\|false\|array\|int` | Calculate the period. Type: `years`, `months`, `weeks`, `days`, `hours`, `minutes`, `seconds`, or `full` (array). |
+| `calculate` | `(string $type): float\|false\|array\|int` | Calculate the period. Type: `years`, `months`, `weeks`, `days`, `hours`, `minutes`, `seconds`, or `full` (returns associative array). |
 
 ### Example
 
@@ -232,7 +232,7 @@ print_r($cb->calculate('full')); // ['years' => 36, 'months' => 1, ...]
 
 ## CalculatePregnancy
 
-**File:** `src/CalculatePregnancy.php`
+**File:** `src/CalculatePregnancy.php` · v2024.11.28
 
 Calculates how many weeks or days pregnant someone is, based on an expected delivery date and a reference (current) date. Uses a 281-day (40-week) pregnancy duration internally.
 
@@ -242,8 +242,8 @@ Calculates how many weeks or days pregnant someone is, based on an expected deli
 |--------|-----------|-------------|
 | `calculateWeeks` | `(string $deliveryDate, string $referenceDate): int` | Weeks pregnant. |
 | `calculateDays` | `(string $deliveryDate, string $referenceDate): int` | Days pregnant. |
-| `calculateWeeksByTimestamp` | `(int $timestampDeliveryDate, int $timestampReferenceDate): int` | Same as `calculateWeeks` but accepts timestamps directly. |
-| `calculateDaysByTimestamp` | `(int $timestampDeliveryDate, int $timestampReferenceDate): int` | Same as `calculateDays` but accepts timestamps directly. |
+| `calculateWeeksByTimestamp` | `(int $timestampDeliveryDate, int $timestampReferenceDate): int` | Same but accepts timestamps directly. |
+| `calculateDaysByTimestamp` | `(int $timestampDeliveryDate, int $timestampReferenceDate): int` | Same but accepts timestamps directly. |
 
 ### Example
 
@@ -257,7 +257,7 @@ echo $cp->calculateDays('2026-09-01', '2026-05-24');  // e.g., 173
 
 ## NationalIdentification
 
-**File:** `src/NationalIdentification.php`
+**File:** `src/NationalIdentification.php` · v2025.02.04
 
 Formats national identification numbers and extracts birth dates. Currently supports Belgium and the Netherlands.
 
@@ -298,7 +298,7 @@ echo $ni->formatNumber('NL', '123456789');
 
 ## QrCodeGenerator
 
-**File:** `src/QrCodeGenerator.php`
+**File:** `src/QrCodeGenerator.php` · v2026.05.24
 
 Generates QR codes using the [`chillerlan/php-qrcode`](https://github.com/chillerlan/php-qrcode) library.
 
@@ -351,105 +351,3 @@ $logoUri = QrCodeGenerator::create()->renderWithLogo(
     'qr-with-logo.png'
 );
 ```
-
----
-
-## Code Review — Bugs & Issues
-
-### 1. `QrCodeGenerator::$qr` type hint mismatch (CRITICAL)
-
-**File:** `src/QrCodeGenerator.php:25`
-
-```php
-public QrCode $qr;  // Class "QrCode" does not exist
-```
-
-The import is `use chillerlan\QRCode\QRCode;` but the property type is `QrCode`. PHP class names are case-sensitive, so this will cause a fatal error at runtime. **Fix:** Change to:
-
-```php
-public QRCode $qr;
-```
-
----
-
-### 2. `BBCode` — malformed HTML tag (LOW)
-
-**File:** `src/BBCode.php:68`
-
-```php
-'<blockquote">code:<hr><code>$1</code><hr></blockquote>',
-```
-
-There is a stray `"` before the `>` in the opening tag. Should be:
-
-```php
-'<blockquote>code:<hr><code>$1</code><hr></blockquote>',
-```
-
----
-
-### 3. `ImageManipulator::getImageFromBase64` — extension may not be applied (MEDIUM)
-
-**File:** `src/ImageManipulator.php:56`
-
-```php
-$tempFilePath = tempnam(sys_get_temp_dir(), 'img_' . uniqid() . '.' . $this->getExtensionFromMimeType($mimeType));
-```
-
-PHP's `tempnam($dir, $prefix)` uses the entire second argument as a *prefix* for a randomly generated filename. The `.jpg` / `.png` suffix is treated as part of the prefix, not as a file extension. The resulting file will likely have no extension or a different one. **Fix:** Rename the file after creation:
-
-```php
-$tempFilePath = tempnam(sys_get_temp_dir(), 'img_');
-$ext = $this->getExtensionFromMimeType($mimeType);
-$finalPath = $tempFilePath . '.' . $ext;
-rename($tempFilePath, $finalPath);
-return $finalPath;
-```
-
----
-
-### 4. `TextManipulator::randomText` uses insecure `rand()` (LOW)
-
-**File:** `src/TextManipulator.php:35`
-
-```php
-$randomString .= $characters[rand(0, strlen($characters) - 1)];
-```
-
-`rand()` is not cryptographically secure and has poor distribution. Use `random_int()` instead:
-
-```php
-$randomString .= $characters[random_int(0, strlen($characters) - 1)];
-```
-
----
-
-### 5. `CalculateBirthday` — property `$interval->days` may be `false` (LOW)
-
-**File:** `src/CalculateBirthday.php:45`
-
-`DateTime::diff()` returns a `DateInterval`. The `days` property is documented as `int|false`. While `false` is rare in PHP 8.x, `calculate('weeks')` uses `$interval->days` directly without a guard. On older or edge-case systems, this could produce a type error.
-
----
-
-## Code Review — Quality Notes
-
-| Area | Note |
-|------|------|
-| **No tests** | The package has no test suite (no `phpunit.xml`, no `tests/` directory). Tests should be added for all public methods. |
-| **Mixed parameter types** | `NationalIdentification::formatNumber()` and `getBirthdate()` declare `mixed $unformattedNumber` but only strings are meaningful. Tightening to `string` would improve type safety. |
-| **No return type on `CalculatePregnancy` properties** | `$DM`, `$pregnancyDuration`, `$periodWeek`, `$periodDay` are untyped. Should be typed (e.g., `private DateManipulator $DM`). |
-| **BBCode regex list vs parameterised patterns** | The BBCode implementation is a fixed list of regex patterns. A more extensible approach would compose tag definitions and generate patterns dynamically. |
-| **`cleanURL` convention** | Replacing `/` with `__` before encoding is a non-standard convention. Users should be aware that `uncleanURL()` assumes this encoding. |
-| **`getImageFromBase64` returns temp file path** | The caller is responsible for deletion. This is documented but could be wrapped in a disposable-style pattern or a `finally`-safe helper. |
-| **PSR-4 autoloading matches `Tigress\` → `src/`** | Correct and well-configured in `composer.json`. |
-
----
-
-## Contributing
-
-1. Fixes for the [bugs listed above](#code-review--bugs--issues) are the highest priority.
-2. Add PHPUnit tests covering all public methods.
-3. Run static analysis (e.g., PHPStan level 6+) and fix all type issues.
-4. When adding a new class, also add its version to `Manipulator::version()`.
-5. Follow the existing code style (no comments in source, `php >= 8.5` features like `match`, `enum`-like patterns, union types, constructor promotion where applicable).
