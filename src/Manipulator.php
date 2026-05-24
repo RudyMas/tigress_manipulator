@@ -8,7 +8,7 @@ namespace Tigress;
  * @author Rudy Mas <rudy.mas@rudymas.be>
  * @copyright 2024-2026, rudymas.be. (http://www.rudymas.be/)
  * @license https://opensource.org/licenses/GPL-3.0 GNU General Public License, version 3 (GPL-3.0)
- * @version 2026.02.26.0
+ * @version 2026.05.24.0
  * @package Tigress\Manipulator
  */
 class Manipulator
@@ -21,15 +21,15 @@ class Manipulator
     public static function version(): array
     {
         return [
-            'Manipulator' => '2026.02.26',
+            'Manipulator' => '2026.05.24',
             'BBCode' => BBCode::version(),
             'CalculateBirthday' => CalculateBirthday::version(),
             'CalculatePregnancy' => CalculatePregnancy::version(),
             'DateManipulator' => DateManipulator::version(),
             'ImageManipulator' => ImageManipulator::version(),
             'NationalIdentification' => NationalIdentification::version(),
-            'TextManipulator' => TextManipulator::version(),
             'QrCodeGenerator' => QrCodeGenerator::version(),
+            'TextManipulator' => TextManipulator::version(),
         ];
     }
 }
