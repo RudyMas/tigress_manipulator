@@ -273,7 +273,7 @@ Formats national identification numbers and extracts birth dates. Currently supp
 #### Belgium (`BE`)
 - Input: 11 digits (e.g. `"00012412301"`)
 - Formatted: `00.01.24-123.01`
-- Birthdate: `1924-01-24` (prefix `19` if year ≥ 20, `20` if year < 20)
+- Birthdate: `2000-01-24` (prefix `19` if year ≥ 20, `20` if year < 20)
 
 #### Netherlands (`NL`)
 - Input: 9 digits (e.g. `"123456789"`)
@@ -288,7 +288,7 @@ echo $ni->formatNumber('BE', '00012412301');
 // "00.01.24-123.01"
 
 echo $ni->getBirthdate('BE', '00012412301');
-// "1924-01-24"
+// "2000-01-24"
 
 echo $ni->formatNumber('NL', '123456789');
 // "1234.56.789"
