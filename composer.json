@@ -2,12 +2,12 @@
   "name": "tigress/manipulator",
   "description": "Tigress manipulator library",
   "type": "library",
-  "license": "GPL-3.0-or-later",
+  "license": "Apache-2.0",
   "authors": [
     {
       "name": "Rudy Mas",
       "email": "rudy.mas@rudymas.be",
-      "homepage": "https://rudymas.be",
+      "homepage": "https://www.rudymas.be",
       "role": "Developer"
     }
   ],
@@ -17,7 +17,7 @@
     "ext-gd": "*",
     "ext-mbstring": "*",
     "ext-fileinfo": "*",
-    "chillerlan/php-qrcode": "^5.0"
+    "chillerlan/php-qrcode": "^5"
   },
   "autoload": {
     "psr-4": {

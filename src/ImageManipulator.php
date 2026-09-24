@@ -9,7 +9,7 @@ use Exception;
  *
  * @author Rudy Mas <rudy.mas@rudymas.be>
  * @copyright 2026, rudymas.be. (http://www.rudymas.be/)
- * @license https://opensource.org/licenses/GPL-3.0 GNU General Public License, version 3 (GPL-3.0)
+ * @license Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  * @version 2026.02.26.1
  * @package Tigress\TextManipulator
  */
